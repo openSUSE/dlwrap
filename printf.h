@@ -1,6 +1,6 @@
 /* dlwrap/wrap.h -- macros for easy definitions of dynamic library wrappers
 
-   Copyright (C) Novell, Inc.
+   Copyright (C) (C) SUSE Linux
    Written by Stanislav Brabec, 2010-2014
 
 trace-wrappers is free software; you can redistribute it and/or
@@ -47,105 +47,105 @@ or obtained by writing to the Free Software Foundation, Inc.,
 #undef dlwrap_macro_0_nonvoid
 #define dlwrap_macro_0_nonvoid(return_type, name) \
 	return_type##_decl return_code; \
-	fprintf (stderr, "DLWRAP: " #name "() = "); \
-	fflush (stderr); \
+	fprintf (dlwrap_file, "DLWRAP: " #name "() = "); \
+	fflush (dlwrap_file); \
 	return_code = dlwrap_orig_1_nonvoid(return_type, name); \
-	fprintf (stderr, return_type##_printf "\n", return_type##_printfunc (return_code)); \
-	fflush (stderr); \
+	fprintf (dlwrap_file, return_type##_printf "\n", return_type##_printfunc (return_code)); \
+	fflush (dlwrap_file); \
 	return return_code;
 
 #undef dlwrap_macro_0_void
 #define dlwrap_macro_0_void(return_type, name) \
-	fprintf (stderr, "DLWRAP: " #name "()\n"); \
-	fflush (stderr); \
+	fprintf (dlwrap_file, "DLWRAP: " #name "()\n"); \
+	fflush (dlwrap_file); \
 	dlwrap_orig_1_void(return_type, name);
 
 #undef dlwrap_macro_1_nonvoid
 #define dlwrap_macro_1_nonvoid(return_type, name, arg1_type, arg1) \
 	return_type##_decl return_code; \
-	fprintf (stderr, "DLWRAP: " #name "(" arg1_type##_printf ") = ", \
+	fprintf (dlwrap_file, "DLWRAP: " #name "(" arg1_type##_printf ") = ", \
 		arg1_type##_printfunc (arg1)); \
-	fflush (stderr); \
+	fflush (dlwrap_file); \
 	return_code = dlwrap_orig_1_nonvoid(return_type, name, arg1_type, arg1); \
-	fprintf (stderr, return_type##_printf "\n", return_type##_printfunc (return_code)); \
-	fflush (stderr); \
+	fprintf (dlwrap_file, return_type##_printf "\n", return_type##_printfunc (return_code)); \
+	fflush (dlwrap_file); \
 	return return_code;
 
 #undef dlwrap_macro_1_void
 #define dlwrap_macro_1_void(return_type, name, arg1_type, arg1) \
-	fprintf (stderr, "DLWRAP: " #name "(" arg1_type##_printf ")\n", \
+	fprintf (dlwrap_file, "DLWRAP: " #name "(" arg1_type##_printf ")\n", \
 		arg1_type##_printfunc (arg1)); \
-	fflush (stderr); \
+	fflush (dlwrap_file); \
 	dlwrap_orig_1_void(return_type, name, arg1_type, arg1);
 
 #undef dlwrap_macro_2_nonvoid
 #define dlwrap_macro_2_nonvoid(return_type, name, arg1_type, arg1, arg2_type, arg2) \
 	return_type##_decl return_code; \
-	fprintf (stderr, "DLWRAP: " #name "(" arg1_type##_printf ", " arg2_type##_printf ") = ", \
+	fprintf (dlwrap_file, "DLWRAP: " #name "(" arg1_type##_printf ", " arg2_type##_printf ") = ", \
 		arg1_type##_printfunc (arg1), arg2_type##_printfunc (arg2)); \
-	fflush (stderr); \
+	fflush (dlwrap_file); \
 	return_code = dlwrap_orig_2_nonvoid(return_type, name, arg1_type, arg1, arg2_type, arg2); \
-	fprintf (stderr, return_type##_printf "\n", return_type##_printfunc (return_code)); \
-	fflush (stderr); \
+	fprintf (dlwrap_file, return_type##_printf "\n", return_type##_printfunc (return_code)); \
+	fflush (dlwrap_file); \
 	return return_code;
 
 #undef dlwrap_macro_2_void
 #define dlwrap_macro_2_void(return_type, name, arg1_type, arg1, arg2_type, arg2) \
-	fprintf (stderr, "DLWRAP: " #name "(" arg1_type##_printf ", " arg2_type##_printf ")\n", \
+	fprintf (dlwrap_file, "DLWRAP: " #name "(" arg1_type##_printf ", " arg2_type##_printf ")\n", \
 		arg1_type##_printfunc (arg1), arg2_type##_printfunc (arg2)); \
-	fflush (stderr); \
+	fflush (dlwrap_file); \
 	dlwrap_orig_2_void(return_type, name, arg1_type, arg1, arg2_type, arg2);
 
 #undef dlwrap_macro_3_nonvoid
 #define dlwrap_macro_3_nonvoid(return_type, name, arg1_type, arg1, arg2_type, arg2, arg3_type, arg3) \
 	return_type##_decl return_code; \
-	fprintf (stderr, "DLWRAP: " #name "(" arg1_type##_printf ", " arg2_type##_printf ", " arg3_type##_printf ") = ", \
+	fprintf (dlwrap_file, "DLWRAP: " #name "(" arg1_type##_printf ", " arg2_type##_printf ", " arg3_type##_printf ") = ", \
 		arg1_type##_printfunc (arg1), arg2_type##_printfunc (arg2), arg3_type##_printfunc (arg3)); \
-	fflush (stderr); \
+	fflush (dlwrap_file); \
 	return_code = dlwrap_orig_3_nonvoid(return_type, name, arg1_type, arg1, arg2_type, arg2, arg3_type, arg3); \
-	fprintf (stderr, return_type##_printf "\n", return_type##_printfunc (return_code)); \
-	fflush (stderr); \
+	fprintf (dlwrap_file, return_type##_printf "\n", return_type##_printfunc (return_code)); \
+	fflush (dlwrap_file); \
 	return return_code;
 
 #undef dlwrap_macro_3_void
 #define dlwrap_macro_3_void(return_type, name, arg1_type, arg1, arg2_type, arg2, arg3_type, arg3) \
-	fprintf (stderr, "DLWRAP: " #name "(" arg1_type##_printf ", " arg2_type##_printf ", " arg3_type##_printf ")\n", \
+	fprintf (dlwrap_file, "DLWRAP: " #name "(" arg1_type##_printf ", " arg2_type##_printf ", " arg3_type##_printf ")\n", \
 		arg1_type##_printfunc (arg1), arg2_type##_printfunc (arg2), arg3_type##_printfunc (arg3)); \
-	fflush (stderr); \
+	fflush (dlwrap_file); \
 	dlwrap_orig_3_void(return_type, name, arg1_type, arg1, arg2_type, arg2, arg3_type, arg3);
 
 #undef dlwrap_macro_4_nonvoid
 #define dlwrap_macro_4_nonvoid(return_type, name, arg1_type, arg1, arg2_type, arg2, arg3_type, arg3, arg4_type, arg4) \
 	return_type##_decl return_code; \
-	fprintf (stderr, "DLWRAP: " #name "(" arg1_type##_printf ", " arg2_type##_printf ", " arg3_type##_printf ", " arg4_type##_printf ") = ", \
+	fprintf (dlwrap_file, "DLWRAP: " #name "(" arg1_type##_printf ", " arg2_type##_printf ", " arg3_type##_printf ", " arg4_type##_printf ") = ", \
 		arg1_type##_printfunc (arg1), arg2_type##_printfunc (arg2), arg3_type##_printfunc (arg3), arg4_type##_printfunc (arg4)); \
-	fflush (stderr); \
+	fflush (dlwrap_file); \
 	return_code = dlwrap_orig_4_nonvoid(return_type, name, arg1_type, arg1, arg2_type, arg2, arg3_type, arg3, arg4_type, arg4); \
-	fprintf (stderr, return_type##_printf "\n", return_type##_printfunc (return_code)); \
-	fflush (stderr); \
+	fprintf (dlwrap_file, return_type##_printf "\n", return_type##_printfunc (return_code)); \
+	fflush (dlwrap_file); \
 	return return_code;
 
 #undef dlwrap_macro_4_void
 #define dlwrap_macro_4_void(return_type, name, arg1_type, arg1, arg2_type, arg2, arg3_type, arg3, arg4_type, arg4) \
-	fprintf (stderr, "DLWRAP: " #name "(" arg1_type##_printf ", " arg2_type##_printf ", " arg3_type##_printf ", " arg4_type##_printf ")\n", \
+	fprintf (dlwrap_file, "DLWRAP: " #name "(" arg1_type##_printf ", " arg2_type##_printf ", " arg3_type##_printf ", " arg4_type##_printf ")\n", \
 		arg1_type##_printfunc (arg1), arg2_type##_printfunc (arg2), arg3_type##_printfunc (arg3), arg4_type##_printfunc (arg4)); \
-	fflush (stderr); \
+	fflush (dlwrap_file); \
 	dlwrap_orig_4_void(return_type, name, arg1_type, arg1, arg2_type, arg2, arg3_type, arg3, arg4_type, arg4);
 
 #undef dlwrap_macro_5_nonvoid
 #define dlwrap_macro_5_nonvoid(return_type, name, arg1_type, arg1, arg2_type, arg2, arg3_type, arg3, arg4_type, arg4, arg5_type, arg5) \
 	return_type##_decl return_code; \
-	fprintf (stderr, "DLWRAP: " #name "(" arg1_type##_printf ", " arg2_type##_printf ", " arg3_type##_printf ", " arg4_type##_printf ", " arg5_type##_printf ") = ", \
+	fprintf (dlwrap_file, "DLWRAP: " #name "(" arg1_type##_printf ", " arg2_type##_printf ", " arg3_type##_printf ", " arg4_type##_printf ", " arg5_type##_printf ") = ", \
 		arg1_type##_printfunc (arg1), arg2_type##_printfunc (arg2), arg3_type##_printfunc (arg3), arg4_type##_printfunc (arg4), arg5_type##_printfunc (arg5)); \
-	fflush (stderr); \
+	fflush (dlwrap_file); \
 	return_code = dlwrap_orig_5_nonvoid(return_type, name, arg1_type, arg1, arg2_type, arg2, arg3_type, arg3, arg4_type, arg4, arg5_type, arg5); \
-	fprintf (stderr, return_type##_printf "\n", return_type##_printfunc (return_code)); \
-	fflush (stderr); \
+	fprintf (dlwrap_file, return_type##_printf "\n", return_type##_printfunc (return_code)); \
+	fflush (dlwrap_file); \
 	return return_code;
 
 #undef dlwrap_macro_5_void
 #define dlwrap_macro_5_void(return_type, name, arg1_type, arg1) \
-	fprintf (stderr, "DLWRAP: " #name "(" arg1_type##_printf ", " arg2_type##_printf ", " arg3_type##_printf ", " arg4_type##_printf ", " arg5_type##_printf ")\n", \
+	fprintf (dlwrap_file, "DLWRAP: " #name "(" arg1_type##_printf ", " arg2_type##_printf ", " arg3_type##_printf ", " arg4_type##_printf ", " arg5_type##_printf ")\n", \
 		arg1_type##_printfunc (arg1), arg2_type##_printfunc (arg2), arg3_type##_printfunc (arg3), arg4_type##_printfunc (arg4), arg5_type##_printfunc (arg5)); \
-	fflush (stderr); \
+	fflush (dlwrap_file); \
 	dlwrap_orig_5_void(void, name, arg1, arg2, arg3, arg4, arg5);

@@ -1,6 +1,6 @@
-/* dlwrap/dlwrap.h -- macros for easy definitions of dynamic library wrappers
+/* dlwrap.h -- macros for easy definitions of dynamic library wrappers
 
-   Copyright (C) Novell, Inc.
+   Copyright (C) (C) SUSE Linux
    Written by Stanislav Brabec, 2010-2014
 
 trace-wrappers is free software; you can redistribute it and/or
@@ -19,10 +19,6 @@ copy can be downloaded from  http://www.gnu.org/licenses/lgpl.html,
 or obtained by writing to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
-
-#ifndef _DLWRAP_DLWRAP_H
-#define _DLWRAP_DLWRAP_H
-
 
 #define _GNU_SOURCE
 #include <dlfcn.h>
@@ -255,6 +251,3 @@ name (arg1_type##_decl arg1, arg2_type##_decl arg2, arg3_type##_decl arg3, arg4_
 		name##_dlwrap_orig = dlwrap_install (#name); \
 	dlwrap_macro_5 (return_type, name, arg1_type, arg1, arg2_type, arg2, arg3_type, arg3, arg4_type, arg4, arg5_type, arg5) \
 }
-
-
-#endif

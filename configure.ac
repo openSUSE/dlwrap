@@ -2,21 +2,36 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.63])
-AC_INIT([trace-wrappers], [0.4], [Stanislav Brabec <sbrabec@suse.cz>])
+AC_INIT([dlwrap], [0.4.1], [Stanislav Brabec <sbrabec@suse.cz>])
 AC_CONFIG_SRCDIR([dlwrap.h])
-AC_CONFIG_MACRO_DIR([m4])
-AM_DISABLE_STATIC
-AM_INIT_AUTOMAKE([-Wall dist-bzip2])
+AM_INIT_AUTOMAKE([-Wall dist-bzip2 no-dist-gzip])
 AM_MAINTAINER_MODE
 
-# Checks for programs.
-dnl We need C compiler.
-AC_PROG_CC
-dnl Required by ltlibrary.am.
-AM_PROG_AR
+dnl For future versions:
+dnl check for flavours of varargs macros (test from GLib)
+AC_MSG_CHECKING(for ISO C99 varargs macros in C)
+AC_TRY_COMPILE([],[
+int a(int p1, int p2, int p3);
+#define call_a(...) a(1,__VA_ARGS__)
+call_a(2,3);
+],savanc_have_iso_c_varargs=yes,savanc_have_iso_c_varargs=no)
+AC_MSG_RESULT($savanc_have_iso_c_varargs)
 
-dnl We build a library, we need libtool.
-LT_INIT
+AC_MSG_CHECKING(for GNUC varargs macros)
+AC_TRY_COMPILE([],[
+int a(int p1, int p2, int p3);
+#define call_a(params...) a(1,params)
+call_a(2,3);
+],savanc_have_gnuc_varargs=yes,savanc_have_gnuc_varargs=no)
+AC_MSG_RESULT($savanc_have_gnuc_varargs)
+
+dnl Output varargs tests
+if test x$savanc_have_iso_c_varargs = xyes; then
+	AC_DEFINE(HAVE_ISO_VARARGS,1,[Have ISO C99 varargs macros])
+fi
+if test x$savanc_have_gnuc_varargs = xyes; then
+	AC_DEFINE(HAVE_GNUC_VARARGS,1,[Have GNU-style varargs macros])
+fi
 
 # Checks for libraries.
 AC_CHECK_LIB([dl], [dlsym])
